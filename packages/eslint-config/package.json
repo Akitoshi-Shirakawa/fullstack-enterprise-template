@@ -1,0 +1,11 @@
+{
+  "name": "@repo/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "main": "base.js",
+  "exports": {
+    "./base": "./base.js",
+    "./nextjs": "./nextjs.js"
+  }
+}
