@@ -55,6 +55,21 @@
    npm run dev
    ```
 
+## 🛠 トラブルシューティング & 開発ガイドライン
+
+### CI 環境でのビルドエラー (SWC Binary)
+GitHub Actions などの Linux 環境で Next.js のビルド (`next build`) を行う際、SWC バイナリの読み込みに失敗する場合があります。
+このプロジェクトでは、安定性を優先して **Babel (`.babelrc`)** を使用するように設定しています。
+将来的に SWC に戻す場合は、`.babelrc` を削除し、環境に合った SWC バイナリを `package-lock.json` に含める必要があります。
+
+### クライアントコンポーネントの明示
+Next.js の App Router を使用しているため、コンポーネントはデフォルトでサーバーコンポーネントです。
+`onClick` や `useState` などのインタラクティブな機能を使用する場合は、ファイルの先頭に必ず `"use client";` を記述してください。
+（例: `apps/web/src/app/page.tsx`, `packages/ui/src/button.tsx`）
+
+### 共有パッケージの変更
+`packages/` 内のコードを変更した場合は、必ずルートディレクトリで `npm install` を実行し、`package-lock.json` を更新してコミットしてください。これにより、CI 環境での一貫性が保たれます。
+
 ---
 
 *Senior Software Engineer / Architect - Portfolio Project*
