@@ -67,8 +67,12 @@ Next.js の App Router を使用しているため、コンポーネントはデ
 `onClick` や `useState` などのインタラクティブな機能を使用する場合は、ファイルの先頭に必ず `"use client";` を記述してください。
 （例: `apps/web/src/app/page.tsx`, `packages/ui/src/button.tsx`）
 
-### 共有パッケージの変更
-`packages/` 内のコードを変更した場合は、必ずルートディレクトリで `npm install` を実行し、`package-lock.json` を更新してコミットしてください。これにより、CI 環境での一貫性が保たれます。
+### ESLint 設定の安定化 (@rushstack/eslint-patch)
+モノレポ構成では、共有設定ファイル（`packages/eslint-config`）が依存するプラグインが各アプリから参照できない問題が発生しやすいため、`@rushstack/eslint-patch` を導入しています。
+これにより、共有設定と同じ階層にインストールされたプラグインが自動的に各アプリへ適用されます。
+
+### 依存関係のバージョン固定
+`eslint-config-next` などのパッケージは、本体（ESLint や Next.js）のメジャーバージョンに強く依存します。脆弱性修正のために `npm audit fix --force` を実行すると、これらのバージョンが不整合を起こし、ビルドや Lint が失敗する可能性があるため、主要なパッケージのバージョンは慎重に管理してください。
 
 ---
 
